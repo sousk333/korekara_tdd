@@ -20,5 +20,23 @@ describe BowlingGame do
       let(:pins) { 1 }
       it { expect(subject).to eq 20 }
     end
+
+    context "スペアをとると次の投球のピン数を加算" do
+      before do
+        [3, 7, 4].each { |n| @game.record_shot(n) }
+      end
+      let(:throw_count) { 17 }
+      let(:pins) { 0 }
+      it { expect(subject).to eq 18 }
+    end
+
+    context "直前の投球と合計が10ピンでもフレーム違いはspareではない" do
+      before do
+        [2, 5, 5, 1].each { |n| @game.record_shot(n) }
+      end
+      let(:throw_count) { 16 }
+      let(:pins) { 0 }
+      it { expect(subject).to eq 13 }
+    end
   end
 end
