@@ -9,10 +9,18 @@ describe BowlingGame do
     end
 
     subject do
-      20.times.each { @game.record_shot(0) }
+      20.times.each { @game.record_shot(pins) }
       @game.score
     end
 
-    it { expect(subject).to eq 0 }
+    context "全ての投球がガターの場合" do
+      let(:pins) { 0 }
+      it { expect(subject).to eq 0 }
+    end
+
+    context "全ての投球で1ピンだけ倒した" do
+      let(:pins) { 1 }
+      it { expect(subject).to eq 20 }
+    end
   end
 end

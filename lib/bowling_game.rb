@@ -1,9 +1,11 @@
 class BowlingGame
-  def record_shot(pins)
+  attr_reader :score
 
+  def initialize
+    @score = 0
   end
 
-  def score
-    0
+  def record_shot(pins)
+    @score += pins
   end
 end
