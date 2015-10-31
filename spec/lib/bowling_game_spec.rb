@@ -1,8 +1,4 @@
 describe BowlingGame do
-  describe "all_gutter_game" do
-    it { expect(BowlingGame.new).to be }
-  end
-
   describe "#record_short" do
     before do
       @game = BowlingGame.new
