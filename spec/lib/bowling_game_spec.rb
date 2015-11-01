@@ -65,5 +65,35 @@ describe BowlingGame do
       let(:pins) { 0 }
       it { expect(subject).to eq 71 }
     end
+
+    context "ストライク後のスペア" do
+      before do
+        [10, 5, 5, 3].each { |n| @game.record_shot(n) }
+      end
+      let(:throw_count) { 15 }
+      let(:pins) { 0 }
+      it { expect(subject).to eq 36 }
+    end
+
+    context "ダブル後のスペア" do
+      before do
+        [10, 10, 5, 5, 3].each { |n| @game.record_shot(n) }
+      end
+      let(:throw_count) { 13 }
+      let(:pins) { 0 }
+      it { expect(subject).to eq 61 }
+    end
+
+    context "全ての投球が1ピンの場合" do
+      let(:throw_count) { 20 }
+      let(:pins) { 1 }
+
+      it "全フレーム2点であること" do
+        subject
+        10.times.with_index(1) do |_, i|
+          expect(@game.frame_score(i)).to eq 2
+        end
+      end
+    end
   end
 end

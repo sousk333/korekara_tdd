@@ -90,4 +90,112 @@ describe Frame do
       end
     end
   end
+
+  describe "#finished?" do
+    subject { @frame.finished? }
+
+    context "一投終えた場合" do
+      before do
+        @frame.instance_variable_set("@pitches", [2])
+      end
+
+      it { expect(subject).to be_falsey }
+    end
+
+    context "二投終えた場合" do
+      before do
+        @frame.instance_variable_set("@pitches", [1, 2])
+      end
+
+      it { expect(subject).to be_truthy }
+    end
+
+    context "一投で10ピン倒した場合" do
+      before do
+        @frame.instance_variable_set("@pitches", [10])
+      end
+
+      it { expect(subject).to be_truthy }
+    end
+  end
+
+  describe "#spare?" do
+    subject { @frame.spare? }
+
+    context "投球してない場合" do
+      it { expect(subject).to be_falsey }
+    end
+
+    context "一投の場合" do
+      before do
+        @frame.instance_variable_set("@pitches", [5])
+      end
+
+      it { expect(subject).to be_falsey }
+    end
+
+    context "一投ので10ピン倒した場合" do
+      before do
+        @frame.instance_variable_set("@pitches", [10])
+      end
+
+      it { expect(subject).to be_falsey }
+    end
+
+    context "二投の場合" do
+      before do
+        @frame.instance_variable_set("@pitches", [7, 2])
+      end
+
+      it { expect(subject).to be_falsey }
+    end
+
+    context "二投で10ピン倒した場合" do
+      before do
+        @frame.instance_variable_set("@pitches", [7, 3])
+      end
+
+      it { expect(subject).to be_truthy }
+    end
+  end
+
+  describe "#strike?" do
+    subject { @frame.strike? }
+
+    context "投球してない場合" do
+      it { expect(subject).to be_falsey }
+    end
+
+    context "一投の場合" do
+      before do
+        @frame.instance_variable_set("@pitches", [5])
+      end
+
+      it { expect(subject).to be_falsey }
+    end
+
+    context "一投ので10ピン倒した場合" do
+      before do
+        @frame.instance_variable_set("@pitches", [10])
+      end
+
+      it { expect(subject).to be_truthy }
+    end
+
+    context "二投の場合" do
+      before do
+        @frame.instance_variable_set("@pitches", [7, 2])
+      end
+
+      it { expect(subject).to be_falsey }
+    end
+
+    context "二投で10ピン倒した場合" do
+      before do
+        @frame.instance_variable_set("@pitches", [7, 3])
+      end
+
+      it { expect(subject).to be_falsey }
+    end
+  end
 end

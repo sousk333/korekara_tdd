@@ -1,4 +1,5 @@
 class Frame
+  PITCH_MAX = 2
   SPARE_POWER = 1
   STRIKE_POWER = 2
   MAX_PINS = 10
@@ -11,8 +12,8 @@ class Frame
 
   def add(pins)
     @pitches << pins
-    return @strike = STRIKE_POWER if pins == MAX_PINS
-    @spare = SPARE_POWER if score == MAX_PINS
+    return @strike = STRIKE_POWER if strike?
+    @spare = SPARE_POWER if spare?
   end
 
   def add_bonus(pins)
@@ -23,6 +24,22 @@ class Frame
   end
 
   def score
-    (@pitches.count == 0 ? 0 : @pitches.inject(&:+)) + @bonus
+     pitch_score + @bonus
+  end
+
+  def finished?
+    pitch_score == Frame::MAX_PINS || @pitches.count == PITCH_MAX
+  end
+
+  def strike?
+    @pitches.count == 1 && @pitches.first == MAX_PINS
+  end
+
+  def spare?
+    @pitches.count == PITCH_MAX && @pitches.inject(&:+) == MAX_PINS
+  end
+
+  def pitch_score
+    @pitches.count == 0 ? 0 : @pitches.inject(&:+)
   end
 end

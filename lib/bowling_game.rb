@@ -1,23 +1,27 @@
 require_relative "frame.rb"
 
 class BowlingGame
+  FRAME_MAX = 10
+
   def initialize
-    @frame_status = Array.new(10) { Frame.new }
+    @frame_status = Array.new(FRAME_MAX) { Frame.new }
     @frame_count = 0
-    @this_frame = 0
   end
 
   def record_shot(pins)
     @frame_status[@frame_count].add(pins)
     add_bonus(pins)
-    return change_frame if chage_frame?
-    @this_frame += 1
+    return change_frame if @frame_status[@frame_count].finished?
   end
 
   def score
     @frame_status.inject(0) do |sum, frame|
       sum + frame.score
     end
+  end
+
+  def frame_score(frame_no)
+    @frame_status[frame_no - 1].score
   end
 
   private
@@ -29,12 +33,7 @@ class BowlingGame
     end
   end
 
-  def chage_frame?
-    @frame_status[@frame_count].score == Frame::MAX_PINS || @this_frame == 1
-  end
-
   def change_frame
-    @this_frame = 0
     @frame_count += 1
   end
 end
