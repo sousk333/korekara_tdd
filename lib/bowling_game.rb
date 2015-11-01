@@ -23,8 +23,10 @@ class BowlingGame
   private
 
   def add_bonus(pins)
-    return if @frame_status[@frame_count - 1].nil?
-    @frame_status[@frame_count - 1].add_bonus(pins)
+    2.times.with_index(1).each do |_, i|
+      next if @frame_status[@frame_count - i].nil?
+      @frame_status[@frame_count - i].add_bonus(pins)
+    end
   end
 
   def chage_frame?

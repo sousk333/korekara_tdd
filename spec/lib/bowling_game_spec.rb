@@ -39,13 +39,31 @@ describe BowlingGame do
       it { expect(subject).to eq 13 }
     end
 
-    #context "ストライクをとると次の2投分のピン数を加算" do
-    #  before do
-    #    [10, 3, 3, 1].each { |n| @game.record_shot(n) }
-    #  end
-    #  let(:throw_count) { 15 }
-    #  let(:pins) { 0 }
-    #  it { expect(subject).to eq 23 }
-    #end
+    context "ストライクをとると次の2投分のピン数を加算" do
+      before do
+        [10, 3, 3, 1].each { |n| @game.record_shot(n) }
+      end
+      let(:throw_count) { 15 }
+      let(:pins) { 0 }
+      it { expect(subject).to eq 23 }
+    end
+
+    context "連続ストライクすなわちダブル" do
+      before do
+        [10, 10, 3, 1].each { |n| @game.record_shot(n) }
+      end
+      let(:throw_count) { 14 }
+      let(:pins) { 0 }
+      it { expect(subject).to eq 41 }
+    end
+
+    context "3連続ストライクすなわちターキー" do
+      before do
+        [10, 10, 10, 3, 1].each { |n| @game.record_shot(n) }
+      end
+      let(:throw_count) { 12 }
+      let(:pins) { 0 }
+      it { expect(subject).to eq 71 }
+    end
   end
 end
