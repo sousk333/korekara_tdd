@@ -38,5 +38,14 @@ describe BowlingGame do
       let(:pins) { 0 }
       it { expect(subject).to eq 13 }
     end
+
+    #context "ストライクをとると次の2投分のピン数を加算" do
+    #  before do
+    #    [10, 3, 3, 1].each { |n| @game.record_shot(n) }
+    #  end
+    #  let(:throw_count) { 15 }
+    #  let(:pins) { 0 }
+    #  it { expect(subject).to eq 23 }
+    #end
   end
 end
