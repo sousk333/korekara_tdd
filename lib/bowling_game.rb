@@ -8,6 +8,10 @@ class BowlingGame
     @frame_count = 0
   end
 
+  def frame_score(frame_no)
+    @frame_status[frame_no - 1].score
+  end
+
   def record_shot(pins)
     @frame_status[@frame_count].add(pins)
     add_bonus(pins)
@@ -15,13 +19,7 @@ class BowlingGame
   end
 
   def score
-    @frame_status.inject(0) do |sum, frame|
-      sum + frame.score
-    end
-  end
-
-  def frame_score(frame_no)
-    @frame_status[frame_no - 1].score
+    @frame_status.inject(0) { |sum, frame| sum += frame.score }
   end
 
   private

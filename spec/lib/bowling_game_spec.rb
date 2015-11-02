@@ -28,6 +28,10 @@ describe BowlingGame do
       let(:throw_count) { 17 }
       let(:pins) { 0 }
       it { expect(subject).to eq 18 }
+      it "一フレームの得点が加算されていること" do
+        subject
+        expect(@game.frame_score(1)).to eq 14
+      end
     end
 
     context "直前の投球と合計が10ピンでもフレーム違いはspareではない" do
@@ -46,6 +50,10 @@ describe BowlingGame do
       let(:throw_count) { 15 }
       let(:pins) { 0 }
       it { expect(subject).to eq 23 }
+      it "一フレームの得点が加算されていること" do
+        subject
+        expect(@game.frame_score(1)).to eq 16
+      end
     end
 
     context "連続ストライクすなわちダブル" do
@@ -55,6 +63,14 @@ describe BowlingGame do
       let(:throw_count) { 14 }
       let(:pins) { 0 }
       it { expect(subject).to eq 41 }
+      it "一フレームの得点が加算されていること" do
+        subject
+        expect(@game.frame_score(1)).to eq 23
+      end
+      it "二フレームの得点が加算されていること" do
+        subject
+        expect(@game.frame_score(2)).to eq 14
+      end
     end
 
     context "3連続ストライクすなわちターキー" do
