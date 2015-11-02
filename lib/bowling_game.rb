@@ -1,11 +1,8 @@
 require_relative "frame.rb"
 
 class BowlingGame
-  FRAME_MAX = 10
-
   def initialize
-    @frame_status = Array.new(FRAME_MAX) { Frame.new }
-    @frame_count = 0
+    @frame_status = [ Frame.new ]
   end
 
   def frame_score(frame_no)
@@ -13,9 +10,9 @@ class BowlingGame
   end
 
   def record_shot(pins)
-    @frame_status[@frame_count].add(pins)
+    @frame_status.last.add(pins)
     add_bonus(pins)
-    return change_frame if @frame_status[@frame_count].finished?
+    return change_frame if @frame_status.last.finished?
   end
 
   def score
@@ -25,13 +22,12 @@ class BowlingGame
   private
 
   def add_bonus(pins)
-    2.times.with_index(1).each do |_, i|
-      next if @frame_status[@frame_count - i].nil?
-      @frame_status[@frame_count - i].add_bonus(pins)
+    @frame_status[0..-2].select(&:need_bonus?).each do |frame|
+      frame.add_bonus(pins)
     end
   end
 
   def change_frame
-    @frame_count += 1
+    @frame_status << Frame.new
   end
 end
